@@ -1,0 +1,47 @@
+<!DOCTYPE HTML><html>
+<html>
+<head>
+  <title>CONFIGURAR</title>
+  <script>
+  function onlyNumber(evt) {
+    var theEvent = evt || window.event;
+    if (theEvent.type === 'paste') {
+        key = event.clipboardData.getData('text/plain');
+    } else {
+        var key = theEvent.keyCode || theEvent.which;
+        key = String.fromCharCode(key);
+    }
+    var regex = /[0-9]|\./;
+    if( !regex.test(key) ) {
+      theEvent.returnValue = false;
+      if(theEvent.preventDefault) theEvent.preventDefault();
+    }
+  }
+  function validateForm() {
+    var email = document.forms["form_config"]["email"].value;
+    var password = document.forms["form_config"]["password"].value;
+    
+    var status = document.getElementById("statusDiv");
+    if (email == "" || password == "") {
+      status.innerHTML = "<p id='status' style='color:red;'>Preencha os campos obrigatorios.</p>";
+      return false;
+    }
+    else {
+      status.innerHTML = "<p id='status' style='color:green;'>Enviando...</p>";
+      return true;
+    }
+  }
+  </script>
+</head>
+<body style="background-color:rgb(30, 37, 37); align-items: center; justify-content: center; text-align: center; color: white;">
+<h1><strong><span style="font-family:arial,helvetica,sans-serif;">Conectar a conta IntelliHouse</span></strong></h1>
+<form name="form_config" action="/login" method="post">
+  <p style="margin-left: 40px;">Email*</p>
+  <p style="margin-left: 40px;"><input maxlength="50" name="email" size="50" type="text" style="padding: 15px 32px;font-size: 20px;" /></p>
+  <p style="margin-left: 40px;">Senha*</p>
+  <p style="margin-left: 40px;"><input maxlength="50" name="password" size="50" type="text" style="padding: 15px 32px;font-size: 20px;" /></p>
+  <p style="margin-left: 40px;"><input style="width: 25em; background-color: #4CAF50; border: none; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px;" name="submit" type="submit" value="Entrar" /></p>
+</form>
+<div id="statusDiv"></div>
+</body>
+</html>
