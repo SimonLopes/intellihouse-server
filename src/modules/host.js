@@ -1,11 +1,11 @@
-import { auth, db } from '../configs/firebase'
-import { doc, setDoc, getDoc, updateDoc, serverTimestamp, deleteDoc, addDoc, collection } from "firebase/firestore";
-import Log from "./log"
+const { auth, db } = require('../configs/firebase.js')
+const { doc, setDoc, getDoc, updateDoc, serverTimestamp, deleteDoc, addDoc, collection } = require("firebase/firestore");
+const Log = require("./log.js")
 
 
 const DB_COLLECTION_NAME = "Hosts";
 
-const CreateHost = async (data : any) => {
+const CreateHost = async (data) => {
     const createHostTable = await addDoc(collection(db, DB_COLLECTION_NAME), {})
     .then(async (HostTableRef) => {
         const host = await setDoc(HostTableRef, {
@@ -33,7 +33,7 @@ const CreateHost = async (data : any) => {
     return createHostTable
 
 }
-const ReadHost = async (data : any) => {
+const ReadHost = async (data) => {
     const docRef = doc(db, DB_COLLECTION_NAME, data.uid)
     const docSnap = await getDoc(docRef)
     if (docSnap.exists()) {
@@ -43,7 +43,7 @@ const ReadHost = async (data : any) => {
         return null
     }
 }
-const UpdateHost = async (data : any) => {
+const UpdateHost = async (data) => {
     const docRef = doc(db, DB_COLLECTION_NAME, data.uid);
 
     const updateHost = await updateDoc(docRef, {
@@ -57,7 +57,7 @@ const UpdateHost = async (data : any) => {
     })
     return updateHost
 }
-const DeleteHost = async (data : any) => {
+const DeleteHost = async (data) => {
     const deleteHostdb = await deleteDoc(doc(db, DB_COLLECTION_NAME, data.uid))
     .then(async () => {
         return true
@@ -67,7 +67,7 @@ const DeleteHost = async (data : any) => {
     return deleteHostdb
 }
 
-export default {
+module.exports = {
     CreateHost,
     ReadHost,
     UpdateHost,

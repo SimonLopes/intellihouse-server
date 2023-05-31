@@ -1,13 +1,11 @@
-import express from "express";
-import cors from "cors"
-import http from "http"
-import { Server } from "socket.io"
-import path from "path"
+const express = require("express")
+const cors = require("cors")
+const http = require("http")
+const { Server } = require("socket.io")
+const path = require("path")
 
-import requestSimule from './configs/requestSimule'
-
-import Host from "./modules/host"
-import User from "./modules/user"
+const Host = require("./modules/host.js")
+const User = require("./modules/user.js")
 
 const app = express();
 
@@ -65,14 +63,13 @@ app.post("/DeleteHost", async (req, res) => {
 
 })
 
-
-
-
-
 app.use(express.static(path.join(__dirname, "..", "public")))
 
 const serverHttp = http.createServer(app)
 
 const io = new Server(serverHttp)
 
-export { serverHttp, io }
+module.exports = {
+    io,
+    serverHttp
+}

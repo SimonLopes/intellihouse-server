@@ -1,5 +1,5 @@
-import { io, serverHttp } from "./http";
-import Users from './modules/user'
+const { io, serverHttp } = require("./http.js")
+const Users = require('./modules/user.js')
 
 
 io.on("connection", socket => {

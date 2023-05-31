@@ -1,10 +1,10 @@
-import { auth, db } from '../configs/firebase'
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, deleteUser, reauthenticateWithCredential } from "firebase/auth";
-import { doc, setDoc, getDoc, updateDoc, serverTimestamp, deleteDoc } from "firebase/firestore";
+const { auth, db } = require('../configs/firebase.js')
+const { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, deleteUser, reauthenticateWithCredential } = require("firebase/auth");
+const { doc, setDoc, getDoc, updateDoc, serverTimestamp, deleteDoc } = require("firebase/firestore");
 
 const DB_COLLECTION_NAME = "Users";
 
-const Auth = (data : any) => {
+const Auth = (data) => {
 
     const signin = signInWithEmailAndPassword(auth, data.email, data.password)
     .then((userCredential) => {
@@ -19,7 +19,7 @@ const Auth = (data : any) => {
     return signin
 
 }
-const CreateUser = async (data : any) => {
+const CreateUser = async (data) => {
 
     const createUser = await createUserWithEmailAndPassword(auth, data.email, data.password)
     .then(async (userCredential) => {
@@ -44,7 +44,7 @@ const CreateUser = async (data : any) => {
     return createUser
 
 }
-const ReadUser = async (data : any) => {
+const ReadUser = async (data) => {
     const docRef = doc(db, DB_COLLECTION_NAME, data.uid)
     const docSnap = await getDoc(docRef)
     if (docSnap.exists()) {
@@ -53,7 +53,7 @@ const ReadUser = async (data : any) => {
         return null
     }
 }
-const UpdateUser = async (data : any) => {
+const UpdateUser = async (data) => {
     const docRef = doc(db, DB_COLLECTION_NAME, data.uid);
 
     const updateUser = await updateDoc(docRef, {
@@ -66,7 +66,7 @@ const UpdateUser = async (data : any) => {
     })
     return updateUser
 }
-const DeleteUser = async (data : any) => {
+const DeleteUser = async (data) => {
     const deleteUserdb = await deleteDoc(doc(db, DB_COLLECTION_NAME, data.uid))
     .then(async () => {
         return true
@@ -76,7 +76,7 @@ const DeleteUser = async (data : any) => {
     return deleteUserdb
 }
 
-export default {
+module.exports = {
     Auth,
     CreateUser,
     ReadUser,

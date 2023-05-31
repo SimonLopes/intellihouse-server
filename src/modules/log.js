@@ -1,9 +1,9 @@
-import { db } from '../configs/firebase'
-import { doc, setDoc, getDoc, updateDoc, serverTimestamp, deleteDoc, addDoc, collection } from "firebase/firestore";
+const { db } = require('../configs/firebase.js')
+const { doc, setDoc, getDoc, updateDoc, serverTimestamp, deleteDoc, addDoc, collection } = require("firebase/firestore");
 
 const DB_COLLECTION_NAME = "Logs";
 
-const CreateLog = async (data : any) => {
+const CreateLog = async (data) => {
     const createLogTable = await addDoc(collection(db, DB_COLLECTION_NAME), {})
     .then(async (LogTableRef) => {
         const log = await setDoc(LogTableRef, {
@@ -29,7 +29,7 @@ const CreateLog = async (data : any) => {
     return createLogTable
 
 }
-const ReadLog = async (data : any) => {
+const ReadLog = async (data) => {
     const docRef = doc(db, DB_COLLECTION_NAME, data.uid)
     const docSnap = await getDoc(docRef)
     if (docSnap.exists()) {
@@ -38,7 +38,7 @@ const ReadLog = async (data : any) => {
         return null
     }
 }
-const DeleteLog = async (data : any) => {
+const DeleteLog = async (data) => {
     const deleteLogdb = await deleteDoc(doc(db, DB_COLLECTION_NAME, data.uid))
     .then(async () => {
         return true
@@ -48,7 +48,7 @@ const DeleteLog = async (data : any) => {
     return deleteLogdb
 }
 
-export default {
+module.exports = {
     CreateLog,
     ReadLog,
     DeleteLog
